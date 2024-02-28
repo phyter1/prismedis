@@ -1,0 +1,42 @@
+{
+  "name": "@prismedis/locales",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./client": "./src/client.ts",
+    "./provider": "./src/provider.tsx",
+    "./lang": "./src/lang.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "type-check": "tsc --noEmit",
+    "generate": "node --import tsx/esm ./src/generate.ts"
+  },
+  "dependencies": {
+    "next-international": "1.2.4",
+    "react": "18.2.0"
+  },
+  "devDependencies": {
+    "@prismedis/eslint-config": "workspace:*",
+    "@prismedis/prettier-config": "workspace:*",
+    "@prismedis/tsconfig": "workspace:*",
+    "eslint": "8.57.0",
+    "tsx": "4.7.1",
+    "typescript": "5.3.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@prismedis/eslint-config/base",
+      "@prismedis/eslint-config/react"
+    ]
+  },
+  "prettier": "@prismedis/prettier-config"
+}
