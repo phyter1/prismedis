@@ -5,7 +5,9 @@ import { redirect } from "next/navigation"
 import { auth, lucia } from "@prismedis/auth"
 
 export async function logoutAction(): Promise<ActionResult> {
+  console.log("logoutAction", lucia, auth, cookies)
   const { session } = await auth()
+  console.log("session", session)
   if (!session) {
     return {
       error: "Unauthorized",

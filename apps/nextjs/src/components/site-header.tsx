@@ -3,8 +3,7 @@ import { Logo } from "@prismedis/ui/logo"
 import { ThemeToggle } from "@prismedis/ui/theme"
 
 import { LanguageSwitcher } from "@/components/language-switcher"
-// import { Logo } from "@/components/logo"
-import { UserMenu } from "@/components/user-menu"
+import { SignOut } from "./sign-out"
 
 export function SiteHeader() {
   return (
@@ -19,7 +18,7 @@ export function SiteHeader() {
           </Link>
 
           <div className="flex gap-1">
-            <UserMenu />
+            <SignOut />
             <LanguageSwitcher />
             <ThemeToggle />
           </div>

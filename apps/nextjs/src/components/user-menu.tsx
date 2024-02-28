@@ -21,6 +21,13 @@ export function UserMenu() {
   const t = useI18n()
   const { data: user } = api.user.profile.useQuery()
 
+  const logout = () => {
+    console.log("logout")
+    logoutAction().catch((err) => {
+      console.error("Failed to logout", err)
+    })
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -49,7 +56,7 @@ export function UserMenu() {
 
         <DropdownMenuSeparator />
 
-        <form action={logoutAction}>
+        <form action={logout}>
           <DropdownMenuItem>
             <button>{t("auth.signout")}</button>
           </DropdownMenuItem>

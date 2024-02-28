@@ -19,5 +19,5 @@ export default {
   schema: "./src/schema",
   driver: "mysql2",
   dbCredentials: { uri },
-  tablesFilter: ["t3lucia_*"],
+  tablesFilter: ["prismedis_*"],
 } satisfies Config
