@@ -12,6 +12,7 @@ const config = {
   transpilePackages: [
     "@prismedis/api",
     "@prismedis/auth",
+    "@prismedis/constants",
     "@prismedis/db",
     "@prismedis/ui",
     "@prismedis/validators",

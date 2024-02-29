@@ -23,7 +23,9 @@
     "./checkbox": "./src/checkbox.tsx",
     "./badge": "./src/badge.tsx",
     "./popover": "./src/popover.tsx",
-    "./table": "./src/table.tsx"
+    "./table": "./src/table.tsx",
+    "./app/icon": "./src/app/icon.tsx",
+    "./app/robots": "./src/app/robots.tsx"
   },
   "license": "MIT",
   "scripts": {
@@ -36,6 +38,7 @@
   "dependencies": {
     "@hookform/resolvers": "3.3.4",
     "@prismedis/locales": "workspace:*",
+    "@prismedis/utils": "workspace:*",
     "@radix-ui/react-checkbox": "1.0.4",
     "@radix-ui/react-dialog": "1.0.5",
     "@radix-ui/react-dropdown-menu": "2.0.6",

@@ -5,6 +5,16 @@ export default {
     "title": "Sign in",
     "page_title": "Sign in"
   },
+  "register": {
+    "headline": "Register",
+    "title": "Register",
+    "page_title": "Register"
+  },
+  "login": {
+    "headline": "Sign in",
+    "title": "Login",
+    "page_title": "Login"
+  },
   "welcome": "Hello <span class=\"font-medium\">{name}</span>!",
   "common": {
     "delete": "Delete",

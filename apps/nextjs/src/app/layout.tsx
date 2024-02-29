@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next"
+import { APP_DESCRIPTION, APP_TITLE } from "@prismedis/constants"
 import { cn } from "@prismedis/ui"
 import { TailwindIndicator } from "@prismedis/ui/tailwind-indicator"
 import { ThemeProvider } from "@prismedis/ui/theme"
@@ -8,9 +9,15 @@ import { TRPCReactProvider } from "@/trpc/react"
 
 import "@/app/globals.css"
 
+import Head from "next/head"
+
 export const metadata: Metadata = {
-  title: "Prismedis",
-  description: "Health data, smarter",
+  title: {
+    default: APP_TITLE,
+    template: `%s | ${APP_TITLE}`,
+  },
+  description: APP_DESCRIPTION,
+  icons: [{ rel: "icon", url: "/icon.png" }],
 }
 
 export const viewport: Viewport = {
@@ -27,12 +34,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/png"
+          sizes="32x32"
+        />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans text-foreground antialiased",
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <TRPCReactProvider>{children}</TRPCReactProvider>
           <TailwindIndicator />
 

@@ -2,7 +2,18 @@ export default {
   "auth": {
     "signout": "Abmelden",
     "headline": "Anmelden mit",
+    "title": "Anmelden",
     "page_title": "Anmelden"
+  },
+  "register": {
+    "headline": "Registrieren",
+    "title": "Registrieren",
+    "page_title": "Registrieren"
+  },
+  "login": {
+    "headline": "Anmelden",
+    "title": "Login",
+    "page_title": "Login"
   },
   "welcome": "Hallo <span class=\"font-medium\">{name}</span>!",
   "common": {
@@ -11,15 +22,15 @@ export default {
     "settings": "Einstellungen"
   },
   "error": {
-    "not_authorized": "Du bist nicht angemeldet."
+    "not_authorized": "Sie sind nicht eingeloggt."
   },
   "posts": {
     "delete": {
-      "failed": "Post konnte nicht gelöscht werden."
+      "failed": "Löschen des Beitrags fehlgeschlagen."
     },
-    "no_records": "Keine Posts.",
+    "no_records": "Keine Beiträge.",
     "create": {
-      "failed": "Post konnte nicht erstellt werden."
+      "failed": "Erstellen des Beitrags fehlgeschlagen."
     },
     "form": {
       "title": "Titel",
