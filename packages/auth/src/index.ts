@@ -6,7 +6,6 @@ import { db, schema } from "@prismedis/db/mysql"
 import { Lucia } from "lucia"
 
 import * as discordProvider from "./providers/discord"
-import * as emailProvider from "./providers/email"
 import * as githubProvider from "./providers/github"
 
 const adapter = new DrizzleMySQLAdapter(db, schema.sessions, schema.users)
@@ -70,7 +69,6 @@ export const auth = cache(async (): Promise<AuthResponse> => {
 export const providers = {
   github: githubProvider,
   discord: discordProvider,
-  email: emailProvider,
 } as const
 
 export type Providers = keyof typeof providers

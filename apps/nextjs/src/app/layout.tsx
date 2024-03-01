@@ -9,6 +9,8 @@ import { TRPCReactProvider } from "@/trpc/react"
 
 import "@/app/globals.css"
 
+import { api } from "@/trpc/server"
+
 export const metadata: Metadata = {
   title: {
     default: APP_TITLE,
@@ -25,11 +27,12 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  await api.tick.tick()
   return (
     <html lang="en" suppressHydrationWarning>
       <body

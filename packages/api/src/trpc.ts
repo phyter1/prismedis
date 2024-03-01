@@ -7,8 +7,10 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 import type { AuthResponse } from "@prismedis/auth"
-import { auth, providers } from "@prismedis/auth"
+import { auth } from "@prismedis/auth"
+import { loginAction } from "@prismedis/auth/login"
 import { logoutAction } from "@prismedis/auth/logout"
+import { registerAction } from "@prismedis/auth/register"
 import { db as mongodb } from "@prismedis/db/mongodb"
 import { db as mysql } from "@prismedis/db/mysql"
 import { initTRPC, TRPCError } from "@trpc/server"
@@ -35,19 +37,17 @@ export const createTRPCContext = async (opts: {
   ipAddress: string
 }) => {
   const session = opts.session ?? (await auth())
-  //const source = opts.headers.get("x-trpc-source") ?? "unknown"
-  // console.log(">>> tRPC Request from", source, "by", session?.user)
-  // await connect()
-  const authActions = {
-    login: providers.email.loginAction,
-    logout: logoutAction,
-    register: providers.email.registerAction,
-  }
+  const serverSecret = process.env.SERVER_SECRET
   return {
     session,
     mysql,
     mongodb,
-    auth: authActions,
+    serverSecret,
+    auth: {
+      login: loginAction,
+      logout: logoutAction,
+      register: registerAction,
+    },
   }
 }
 
@@ -112,6 +112,25 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     ctx: {
       // infers the `session` as non-nullable
       session: { ...ctx.session, user: ctx.session.user },
+    },
+  })
+})
+
+/**
+ * Protected (server) procedure
+ *
+ * This is a set of procedures that are only accessible to the server. It verifies the session is valid and guarantees that the caller is the server.
+ *
+ * @see https://trpc.io/docs/procedures
+ */
+export const serverProcedure = t.procedure.use(({ ctx, next }) => {
+  if (ctx.serverSecret !== process.env.SERVER_SECRET) {
+    throw new TRPCError({ code: "UNAUTHORIZED" })
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session },
     },
   })
 })

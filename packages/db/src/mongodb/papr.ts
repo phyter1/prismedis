@@ -1,3 +1,4 @@
+import { APP_TITLE } from "@prismedis/constants"
 import { MongoClient, ServerApiVersion } from "mongodb"
 import Papr from "papr"
 
@@ -15,7 +16,7 @@ export const connect = async () => {
       },
     })
 
-    papr.initialize(client.db(APP_TITLE))
+    papr.initialize(client.db(APP_TITLE.toLowerCase()))
 
     await papr.updateSchemas()
   }
