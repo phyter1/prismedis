@@ -13,10 +13,11 @@ export const env = createEnv({
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    DB_HOST: z.string(),
-    DB_NAME: z.string(),
-    DB_PASSWORD: z.string(),
-    DB_USERNAME: z.string(),
+    MYSQL_HOST: z.string(),
+    MYSQL_NAME: z.string(),
+    MYSQL_PASSWORD: z.string(),
+    MYSQL_USERNAME: z.string(),
+    MONGODB_URI: z.string(),
     AUTH_GITHUB_ID: z.string().optional(),
     AUTH_GITHUB_SECRET: z.string().optional(),
     AUTH_DISCORD_ID: z.string().optional(),
@@ -33,10 +34,11 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
-    DB_HOST: process.env.DB_HOST,
-    DB_NAME: process.env.DB_NAME,
-    DB_PASSWORD: process.env.DB_PASSWORD,
-    DB_USERNAME: process.env.DB_USERNAME,
+    MYSQL_HOST: process.env.MYSQL_HOST,
+    MYSQL_NAME: process.env.MYSQL_NAME,
+    MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
+    MYSQL_USERNAME: process.env.MYSQL_USERNAME,
+    MONGODB_URI: process.env.MONGODB_URI,
     PORT: process.env.PORT,
     AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
     AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,

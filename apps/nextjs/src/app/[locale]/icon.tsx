@@ -23,7 +23,7 @@ export default function Icon() {
           height: 32,
         }}
       >
-        A
+        P
       </div>
     ),
     // ImageResponse options

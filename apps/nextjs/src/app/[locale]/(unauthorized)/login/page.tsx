@@ -1,6 +1,8 @@
-import { providers } from "@prismedis/auth"
 import { getI18n } from "@prismedis/locales/server"
-import { ActionForm } from "@prismedis/ui/action-form"
+import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
+import { LoginRegisterForm } from "@prismedis/ui/forms/login"
+
+import { api } from "@/trpc/server"
 
 export async function generateMetadata() {
   const t = await getI18n()
@@ -8,20 +10,22 @@ export async function generateMetadata() {
     title: t("auth.page_title"),
   }
 }
-
+const action = async (data: { email: string; password: string }) => {
+  "use server"
+  return api.auth.login({
+    email: data.email,
+    password: data.password,
+  })
+}
 export default async function Page() {
   return (
-    <>
-      <h1>Login to your account</h1>
-      <ActionForm action={providers.email.handleLogin}>
-        <label htmlFor="email">Email</label>
-        <input type="email" name="email" id="email" />
-        <br />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" />
-        <br />
-        <button>Continue</button>
-      </ActionForm>
-    </>
+    <Card>
+      <CardHeader>
+        <CardTitle>Log in</CardTitle>
+      </CardHeader>
+      <CardContent className="p-6">
+        <LoginRegisterForm action={action} />
+      </CardContent>
+    </Card>
   )
 }

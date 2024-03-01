@@ -13,10 +13,10 @@ export { mySqlTable as tableCreator } from "./schema/_table"
 export * from "drizzle-orm"
 
 const connection = mysql.createPool({
-  host: process.env.DB_HOST!,
-  user: process.env.DB_USERNAME!,
-  password: process.env.DB_PASSWORD!,
-  database: process.env.DB_NAME!,
+  host: process.env.MYSQL_HOST!,
+  user: process.env.MYSQL_USERNAME!,
+  password: process.env.MYSQL_PASSWORD!,
+  database: process.env.MYSQL_NAME!,
   connectionLimit: 2,
   ssl: {
     rejectUnauthorized: true,

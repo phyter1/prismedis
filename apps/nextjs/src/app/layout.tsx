@@ -9,8 +9,6 @@ import { TRPCReactProvider } from "@/trpc/react"
 
 import "@/app/globals.css"
 
-import Head from "next/head"
-
 export const metadata: Metadata = {
   title: {
     default: APP_TITLE,
@@ -34,14 +32,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          rel="icon"
-          href="/icon?<generated>"
-          type="image/png"
-          sizes="32x32"
-        />
-      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans text-foreground antialiased",

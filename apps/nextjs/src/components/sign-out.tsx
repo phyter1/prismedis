@@ -1,7 +1,6 @@
+import { logoutAction } from "@prismedis/auth/logout"
 import { Button } from "@prismedis/ui/button"
 import { LogOutIcon } from "lucide-react"
-
-import { logoutAction } from "@/actions/logout"
 
 export function SignOut() {
   return (

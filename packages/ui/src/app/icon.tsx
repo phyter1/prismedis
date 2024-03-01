@@ -14,7 +14,7 @@ export default function Icon() {
     (
       <div
         // eslint-disable-next-line react/no-unknown-property
-        tw="flex items-center justify-center bg-black text-[1.5rem] leading-8 text-white"
+        tw="flex items-center justify-center bg-black text-[1.5rem] leading-8 text-white rounded-full"
         style={{ ...size }}
       >
         P

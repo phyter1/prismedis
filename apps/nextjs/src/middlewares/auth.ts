@@ -2,7 +2,7 @@ import type { MiddlewareFunction } from "@/middlewares/compose-middleware"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
-const AUTH_EXCLUDE = ["/auth", "/login", "/register"]
+const AUTH_EXCLUDE = ["/login", "/register"]
 
 export const handleAuth: MiddlewareFunction = async (request, next) => {
   const pathname = request.nextUrl.pathname
@@ -25,7 +25,7 @@ export const handleAuth: MiddlewareFunction = async (request, next) => {
 
   if (!verifySession.valid) {
     // invalid session
-    return NextResponse.redirect(new URL("/auth", request.nextUrl))
+    return NextResponse.redirect(new URL("/login", request.nextUrl))
   }
 
   // everything seems ok

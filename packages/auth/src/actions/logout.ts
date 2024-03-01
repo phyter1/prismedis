@@ -1,11 +1,9 @@
-"use server"
-
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { auth, lucia } from "@prismedis/auth"
 
-export async function logoutAction(): Promise<ActionResult> {
-  console.log("logoutAction", lucia, auth, cookies)
+export async function logoutAction() {
+  "use server"
   const { session } = await auth()
   console.log("session", session)
   if (!session) {
@@ -22,9 +20,5 @@ export async function logoutAction(): Promise<ActionResult> {
     sessionCookie.value,
     sessionCookie.attributes,
   )
-  return redirect("/auth")
-}
-
-interface ActionResult {
-  error: string | null
+  return redirect("/login")
 }

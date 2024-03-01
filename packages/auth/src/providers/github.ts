@@ -1,8 +1,7 @@
 import type { Endpoints } from "@octokit/types"
+import { db, schema } from "@prismedis/db/mysql"
 import { GitHub } from "arctic"
 import { generateId } from "lucia"
-
-import { db, schema } from "@prismedis/db"
 
 import { env } from "../../env.mjs"
 

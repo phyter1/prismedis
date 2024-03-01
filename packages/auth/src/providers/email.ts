@@ -1,38 +1,31 @@
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
+import { db, schema } from "@prismedis/db/mysql"
+import { LoginRegisterSchema } from "@prismedis/validators/login-register"
 import { generateId, Scrypt } from "lucia"
-
-import { db, schema } from "@prismedis/db"
 
 import { lucia } from ".."
 
-interface ActionResult {
-  error: string
-}
-
 export const name = "Email"
 
-export const handleRegister = async (
-  _: unknown,
-  formData: FormData,
-): Promise<ActionResult> => {
+export const registerAction = async (formData: LoginRegisterSchema) => {
   "use server"
-  const email = formData.get("email")
-  if (
-    typeof email !== "string" ||
-    // eslint-disable-next-line no-control-regex
-    !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
-  ) {
+  const { email, password } = formData
+  if (!email || !password) {
     return {
-      error: "Invalid email",
+      error: "Invalid email or password",
     }
   }
-  const password = formData.get("password")
-  const strength =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-  if (typeof password !== "string" || !strength.test(password)) {
+  const result = LoginRegisterSchema.safeParse({
+    email,
+    password,
+  })
+  if (!result.success) {
+    const error = result.error.format()
     return {
-      error: "Invalid password",
+      error:
+        error.email?._errors?.[0] ??
+        error.password?._errors?.[0] ??
+        "Invalid email or password",
     }
   }
 
@@ -41,24 +34,30 @@ export const handleRegister = async (
 
   // check if user exists
 
-  await db.transaction(async (tx) => {
-    const existingUser = await tx.query.users.findFirst({
-      columns: {
-        id: true,
-      },
-      where: (users, { eq }) => {
-        return eq(users.email, email)
-      },
+  try {
+    await db.transaction(async (tx) => {
+      const existingUser = await tx.query.users.findFirst({
+        columns: {
+          id: true,
+        },
+        where: (users, { eq }) => {
+          return eq(users.email, email)
+        },
+      })
+      if (existingUser) {
+        throw new Error()
+      }
+      await tx.insert(schema.users).values({
+        id: userId,
+        email,
+        password: hashedPassword,
+      })
     })
-    if (existingUser) {
-      return
+  } catch {
+    return {
+      error: "User already exists",
     }
-    await tx.insert(schema.users).values({
-      id: userId,
-      email,
-      password: hashedPassword,
-    })
-  })
+  }
   const session = await lucia.createSession(userId, {
     userAgent: "unknown",
     ipAddress: "unknown",
@@ -69,31 +68,32 @@ export const handleRegister = async (
     sessionCookie.value,
     sessionCookie.attributes,
   )
-  redirect("/")
+  return {
+    success: true,
+  }
 }
 
-export const handleLogin = async (
-  _: unknown,
-  formData: FormData,
-): Promise<ActionResult> => {
+export const loginAction = async (formData: LoginRegisterSchema) => {
   "use server"
-  const email = formData.get("email")
-  if (
-    typeof email !== "string" ||
-    // eslint-disable-next-line no-control-regex
-    !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
-  ) {
+  const { email, password } = formData
+  if (!email || !password) {
     return {
-      error: "Invalid email",
+      error: "Invalid email or password",
     }
   }
-  const password = formData.get("password")
-  if (typeof password !== "string") {
+  const result = LoginRegisterSchema.safeParse({
+    email,
+    password,
+  })
+  if (!result.success) {
+    const error = result.error.format()
     return {
-      error: "Invalid password",
+      error:
+        error.email?._errors?.[0] ??
+        error.password?._errors?.[0] ??
+        "Invalid email or password",
     }
   }
-
   const user = await db.query.users.findFirst({
     where: (users, { eq }) => {
       return eq(users.email, email)
@@ -116,5 +116,5 @@ export const handleLogin = async (
     sessionCookie.value,
     sessionCookie.attributes,
   )
-  redirect("/")
+  return { success: true }
 }

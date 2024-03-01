@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    "./mysql": "./src/mysql/index.ts",
+    "./mongodb": "./src/mongodb/index.ts"
   },
   "license": "MIT",
   "scripts": {
@@ -16,14 +17,19 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@prismedis/constants": "workspace:*",
+    "aws4": "^1.12.0",
     "drizzle-orm": "0.29.4",
+    "mongodb": "^6.3.0",
     "mysql2": "3.9.1",
-    "nanoid": "5.0.6"
+    "nanoid": "5.0.6",
+    "papr": "^15.2.0"
   },
   "devDependencies": {
     "@prismedis/eslint-config": "workspace:*",
     "@prismedis/prettier-config": "workspace:*",
     "@prismedis/tsconfig": "workspace:*",
+    "dotenv": "^16.4.5",
     "dotenv-cli": "7.3.0",
     "drizzle-kit": "0.20.14",
     "eslint": "8.57.0",

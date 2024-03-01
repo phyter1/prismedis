@@ -2,9 +2,8 @@ import type { Session, User } from "lucia"
 import { cache } from "react"
 import { cookies } from "next/headers"
 import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle"
+import { db, schema } from "@prismedis/db/mysql"
 import { Lucia } from "lucia"
-
-import { db, schema } from "@prismedis/db"
 
 import * as discordProvider from "./providers/discord"
 import * as emailProvider from "./providers/email"

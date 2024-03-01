@@ -23,7 +23,8 @@
     "typecheck": "turbo typecheck",
     "deps:check": "pnpm outdated -r",
     "deps:update": "pnpm update -i -L -r",
-    "lang:gen": "pnpm -F locales generate"
+    "lang:gen": "pnpm -F locales generate",
+    "ui:add": "pnpm --filter ui ui:add"
   },
   "devDependencies": {
     "@prismedis/prettier-config": "workspace:*",

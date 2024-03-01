@@ -1,9 +1,8 @@
 import type { APIUser as DiscordUser } from "discord-api-types/v10"
+import { db, schema } from "@prismedis/db/mysql"
 import { Discord } from "arctic"
 import { OAuth2Scopes } from "discord-api-types/v10"
 import { generateId } from "lucia"
-
-import { db, schema } from "@prismedis/db"
 
 import { env } from "../../env.mjs"
 

@@ -6,13 +6,14 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+import type { AuthResponse } from "@prismedis/auth"
+import { auth, providers } from "@prismedis/auth"
+import { logoutAction } from "@prismedis/auth/logout"
+import { db as mongodb } from "@prismedis/db/mongodb"
+import { db as mysql } from "@prismedis/db/mysql"
 import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
 import { ZodError } from "zod"
-
-import type { AuthResponse } from "@prismedis/auth"
-import { auth } from "@prismedis/auth"
-import { db } from "@prismedis/db"
 
 /**
  * 1. CONTEXT
@@ -30,14 +31,23 @@ import { db } from "@prismedis/db"
 export const createTRPCContext = async (opts: {
   headers: Headers
   session: AuthResponse | null
+  userAgent: string
+  ipAddress: string
 }) => {
   const session = opts.session ?? (await auth())
   //const source = opts.headers.get("x-trpc-source") ?? "unknown"
   // console.log(">>> tRPC Request from", source, "by", session?.user)
-
+  // await connect()
+  const authActions = {
+    login: providers.email.loginAction,
+    logout: logoutAction,
+    register: providers.email.registerAction,
+  }
   return {
     session,
-    db,
+    mysql,
+    mongodb,
+    auth: authActions,
   }
 }
 
