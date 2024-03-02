@@ -1,0 +1,16 @@
+{
+  "extends": "@prismedis/tsconfig/service.json",
+  "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
+    "module": "CommonJS",
+    "outDir": "./dist",
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "."
+  ]
+}
