@@ -1,12 +1,17 @@
 import type { PropsWithChildren } from "react"
 import { redirect } from "next/navigation"
+
 import { auth } from "@prismedis/auth"
 import { Logo as PrismedisLogo } from "@prismedis/ui/logo"
 
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await auth()
 
-  if (session.user) {
+  if (
+    session.user &&
+    (session.session.userRole === "admin" ||
+      session.session.userRole === "internal")
+  ) {
     redirect("/")
   }
 
@@ -15,7 +20,7 @@ export default async function Layout({ children }: PropsWithChildren) {
       <div className="relative hidden h-full flex-col bg-muted p-10 dark:border-r dark:text-white lg:flex">
         <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-900" />
         <div className="relative flex flex-1 items-center justify-center">
-          <PrismedisLogo />
+          <PrismedisLogo size="xl" appName={"Admin"} />
         </div>
       </div>
 
@@ -23,7 +28,7 @@ export default async function Layout({ children }: PropsWithChildren) {
         <div className="mx-auto flex  w-[21.875rem] flex-col justify-center space-y-6">
           <div className="flex flex-col space-y-2 text-center">
             <div className="mb-10 flex justify-center lg:hidden">
-              <PrismedisLogo />
+              <PrismedisLogo size="md" appName={"Admin"} />
             </div>
             {children}
           </div>

@@ -38,6 +38,7 @@ export const sessions = mySqlTable(
     expiresAt: datetime("expires_at").notNull(),
     userAgent: varchar("user_agent", { length: 255 }),
     ipAddress: varchar("ip_address", { length: 255 }),
+    userRole: mysqlEnum("user_role", ["user", "admin", "internal"]),
   },
   (t) => ({
     userIdx: index("user_idx").on(t.userId),

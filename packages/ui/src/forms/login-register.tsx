@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
@@ -25,6 +26,7 @@ export function LoginRegisterForm({
     values: LoginRegisterSchema,
   ) => Promise<{ error?: string; success?: boolean }>
 }) {
+  const [loading, setLoading] = useState(false)
   const form = useForm<LoginRegisterSchema>({
     resolver: zodResolver(LoginRegisterSchema),
     defaultValues: {
@@ -34,8 +36,10 @@ export function LoginRegisterForm({
   })
 
   const onSubmit = async (values: LoginRegisterSchema) => {
+    setLoading(true)
     const res = await action(values)
     if (res?.error) {
+      setLoading(false)
       toast.error(res.error, {
         position: "bottom-center",
       })
@@ -77,7 +81,12 @@ export function LoginRegisterForm({
             </FormItem>
           )}
         />
-        <Button className="w-full" variant="secondary" type="submit">
+        <Button
+          disabled={loading}
+          className="w-full"
+          variant="secondary"
+          type="submit"
+        >
           Continue
         </Button>
       </form>

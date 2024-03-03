@@ -2,8 +2,9 @@ import type { Session, User } from "lucia"
 import { cache } from "react"
 import { cookies } from "next/headers"
 import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle"
-import { db, schema } from "@prismedis/db/mysql"
 import { Lucia } from "lucia"
+
+import { db, schema } from "@prismedis/db/mysql"
 
 import * as discordProvider from "./providers/discord"
 import * as githubProvider from "./providers/github"
@@ -21,6 +22,7 @@ export const lucia = new Lucia(adapter, {
     return {
       userAgent: databaseSessionAttributes.userAgent,
       ipAddress: databaseSessionAttributes.ipAddress,
+      userRole: databaseSessionAttributes.userRole,
     }
   },
 
@@ -84,7 +86,7 @@ declare module "lucia" {
     DatabaseUserAttributes: Omit<typeof schema.users.$inferSelect, "id">
     DatabaseSessionAttributes: Pick<
       typeof schema.sessions.$inferSelect,
-      "ipAddress" | "userAgent"
+      "ipAddress" | "userAgent" | "userRole"
     >
   }
 }

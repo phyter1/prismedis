@@ -7,7 +7,7 @@ import { Logo as PrismedisLogo } from "@prismedis/ui/logo"
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await auth()
 
-  if (session.user) {
+  if (session.user && session.session.userRole === "internal") {
     redirect("/")
   }
 

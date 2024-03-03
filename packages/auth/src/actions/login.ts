@@ -46,9 +46,25 @@ export const loginAction = async (formData: LoginRegisterSchema) => {
       error: "Invalid email or password",
     }
   }
+  const header = headers()
+  const ipAddress =
+    header.get("x-real-ip") ??
+    header.get("x-forwarded-for") ??
+    header.get("cf-connecting-ip") ??
+    header.get("fastly-client-ip") ??
+    header.get("true-client-ip") ??
+    header.get("x-client-ip") ??
+    header.get("x-cluster-client-ip") ??
+    header.get("x-forwarded") ??
+    header.get("forwarded-for") ??
+    header.get("forwarded") ??
+    header.get("via") ??
+    "unknown"
+  const userAgent = header.get("user-agent") ?? "unknown"
   const session = await lucia.createSession(user.id, {
-    userAgent: "unknown",
-    ipAddress: "unknown",
+    userAgent,
+    ipAddress,
+    userRole: user.role,
   })
   const sessionCookie = lucia.createSessionCookie(session.id)
   cookies().set(
@@ -133,6 +149,16 @@ export const loginVerificationAction = async ({ code }: { code: string }) => {
       error: "Invalid code",
     }
   }
+  const user = await mysql.query.users.findFirst({
+    where(fields, { eq }) {
+      return eq(fields.id, verification.user)
+    },
+  })
+  if (!user) {
+    return {
+      error: "Invalid user",
+    }
+  }
   // DELETE THE VALIDATION RECORD
   await mongodb.verification.deleteOne({
     _id: verification._id,
@@ -156,6 +182,7 @@ export const loginVerificationAction = async ({ code }: { code: string }) => {
   const session = await lucia.createSession(verification.user, {
     userAgent,
     ipAddress,
+    userRole: user.role,
   })
   const sessionCookie = lucia.createSessionCookie(session.id)
   cookies().set(
