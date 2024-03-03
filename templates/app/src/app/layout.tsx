@@ -9,12 +9,10 @@ import { TRPCReactProvider } from "@/trpc/react"
 
 import "@/app/globals.css"
 
-import { api } from "@/trpc/server"
-
 export const metadata: Metadata = {
   title: {
     default: APP_TITLE,
-    template: `%s | ${APP_TITLE}`,
+    template: `${APP_TITLE} | %s`,
   },
   description: APP_DESCRIPTION,
   icons: [{ rel: "icon", url: "/icon.png" }],
@@ -32,7 +30,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  await api.tick.tick()
   return (
     <html lang="en" suppressHydrationWarning>
       <body

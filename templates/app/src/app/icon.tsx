@@ -1,3 +1,4 @@
+import { Oxanium } from "next/font/google"
 import { ImageResponse } from "next/og"
 
 // Route segment config
@@ -10,6 +11,10 @@ export const size = {
 }
 export const contentType = "image/png"
 
+const oxanium = Oxanium({
+  subsets: ["latin"],
+})
+
 // Image generation
 export default function Icon() {
   return new ImageResponse(
@@ -17,13 +22,16 @@ export default function Icon() {
       // ImageResponse JSX element
       <div
         // eslint-disable-next-line react/no-unknown-property
-        tw="flex items-center justify-center bg-black text-[24px] leading-8 text-white rounded-full"
+        tw={
+          oxanium.className +
+          " flex items-center justify-center bg-black text-[24px] leading-8 text-white rounded-lg"
+        }
         style={{
           width: 32,
           height: 32,
         }}
       >
-        A
+        PD
       </div>
     ),
     // ImageResponse options

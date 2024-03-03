@@ -19,6 +19,7 @@
     "@prismedis/auth": "workspace:*",
     "@prismedis/constants": "workspace:*",
     "@prismedis/db": "workspace:*",
+    "@prismedis/email": "workspace:*",
     "@prismedis/locales": "workspace:*",
     "@prismedis/ui": "workspace:*",
     "@prismedis/utils": "workspace:*",

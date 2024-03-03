@@ -1,7 +1,12 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { auth } from "@prismedis/auth"
 
 import { SiteHeader } from "@/components/site-header"
+
+export const metadata: Metadata = {
+  title: "Console",
+}
 
 export default async function RootLayout({
   children,

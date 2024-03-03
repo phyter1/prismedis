@@ -1,10 +1,10 @@
 export const main = async () => {
   await new Promise<void>((resolve) => {
-    let t = new Date().getTime() + 1000
+    // let t = new Date().getTime() + 1000
     const i = setInterval(() => {
       try {
-        console.log("Hello, world!", t)
-        t = new Date().getTime() + 1000
+        // console.log("Hello, world!", t)
+        // t = new Date().getTime() + 1000
       } catch (e) {
         clearInterval(i)
         resolve()

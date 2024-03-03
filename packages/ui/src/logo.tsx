@@ -6,14 +6,37 @@ import { cn } from "./index"
 const oxanium = Oxanium({
   subsets: ["latin"],
 })
-export const Logo = () => {
+export const Logo = ({
+  appName,
+  size = "sm",
+}: {
+  appName: string
+  size: "sm" | "md" | "lg" | "xl"
+}) => {
   return (
-    <div className="flex items-center gap-1 sm:gap-2">
-      <SiPrisma className="h-4 w-4 text-primary sm:h-6 sm:w-6" />
+    <div
+      className={cn("flex items-center gap-1", {
+        "gap-1.5": size === "md",
+        "gap-2": size === "lg",
+        "gap-3": size === "xl",
+      })}
+    >
+      <SiPrisma
+        className={cn("h-5 w-5 text-primary", {
+          "h-6 w-6": size === "md",
+          "h-8 w-8": size === "lg",
+          "h-10 w-10": size === "xl",
+        })}
+      />
       <h1
         className={cn(
           oxanium.className,
-          "text-xl font-light tracking-tight sm:text-3xl",
+          "pt-1 text-xl font-light tracking-tight",
+          {
+            "text-2xl": size === "md",
+            "pt-1.5 text-3xl": size === "lg",
+            "pt-2 text-4xl": size === "xl",
+          },
         )}
       >
         Prismedis
@@ -21,10 +44,14 @@ export const Logo = () => {
       <h1
         className={cn(
           oxanium.className,
-          "text-xl font-semibold tracking-tight sm:text-3xl",
+          "text-xl font-semibold tracking-tight",
+          {
+            "text-2xl": size === "md",
+            "text-3xl": size === "lg",
+          },
         )}
       >
-        Console
+        {appName}
       </h1>
     </div>
   )

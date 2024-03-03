@@ -1,0 +1,14 @@
+{
+  "extends": "@prismedis/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "include": [
+    "*.ts",
+    ".",
+    "emails"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -6,6 +6,10 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+import { initTRPC, TRPCError } from "@trpc/server"
+import superjson from "superjson"
+import { ZodError } from "zod"
+
 import type { AuthResponse } from "@prismedis/auth"
 import { auth } from "@prismedis/auth"
 import { loginAction } from "@prismedis/auth/login"
@@ -13,9 +17,6 @@ import { logoutAction } from "@prismedis/auth/logout"
 import { registerAction } from "@prismedis/auth/register"
 import { db as mongodb } from "@prismedis/db/mongodb"
 import { db as mysql } from "@prismedis/db/mysql"
-import { initTRPC, TRPCError } from "@trpc/server"
-import superjson from "superjson"
-import { ZodError } from "zod"
 
 /**
  * 1. CONTEXT
@@ -111,6 +112,35 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   return next({
     ctx: {
       // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  })
+})
+/**
+ * Internal user procedure
+ *
+ * If you want a query or mutation to ONLY be accessible to the internal users, use this. It verifies
+ * the session is valid and guarantees that the caller is the user with the role of 'internal'.
+ *
+ * @see https://trpc.io/docs/procedures
+ **/
+export const internalProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.session.user?.id) {
+    throw new TRPCError({ code: "UNAUTHORIZED" })
+  }
+  const user = await mysql.query.users.findFirst({
+    where(fields, operators) {
+      return operators.and(
+        operators.eq(fields.id, ctx.session.user?.id ?? ""),
+        operators.eq(fields.role, "internal"),
+      )
+    },
+  })
+  if (!user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" })
+  }
+  return next({
+    ctx: {
       session: { ...ctx.session, user: ctx.session.user },
     },
   })

@@ -1,6 +1,7 @@
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
+
 import { appRouter, createTRPCContext } from "@prismedis/api"
 import { auth } from "@prismedis/auth"
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
 
 /**
  * Configure basic CORS headers
@@ -24,6 +25,23 @@ export function OPTIONS() {
 const handler = async (req: Request) => {
   const currentUser = await auth()
 
+  // request ip address
+  const ipAddress =
+    req.headers.get("x-real-ip") ??
+    req.headers.get("x-forwarded-for") ??
+    req.headers.get("cf-connecting-ip") ??
+    req.headers.get("fastly-client-ip") ??
+    req.headers.get("true-client-ip") ??
+    req.headers.get("x-client-ip") ??
+    req.headers.get("x-cluster-client-ip") ??
+    req.headers.get("x-forwarded") ??
+    req.headers.get("forwarded-for") ??
+    req.headers.get("forwarded") ??
+    req.headers.get("via")
+
+  // request user agent
+  const userAgent = req.headers.get("user-agent")
+
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
@@ -32,6 +50,8 @@ const handler = async (req: Request) => {
       createTRPCContext({
         session: currentUser,
         headers: req.headers,
+        ipAddress: ipAddress ?? "unknown",
+        userAgent: userAgent ?? "unknown",
       }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error)

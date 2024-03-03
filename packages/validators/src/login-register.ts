@@ -11,3 +11,7 @@ export const LoginRegisterSchema = z.object({
 })
 
 export type LoginRegisterSchema = z.infer<typeof LoginRegisterSchema>
+
+export const LoginEmailSchema = z.object({
+  email: z.string().email("Please enter a valid email address."),
+})

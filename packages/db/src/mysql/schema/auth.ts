@@ -4,7 +4,7 @@
  * - https://v3.lucia-auth.com/guides/oauth/multiple-providers
  */
 
-import { datetime, index, varchar } from "drizzle-orm/mysql-core"
+import { datetime, index, mysqlEnum, varchar } from "drizzle-orm/mysql-core"
 
 import { mySqlTable } from "./_table"
 
@@ -17,6 +17,9 @@ export const users = mySqlTable(
     email: varchar("email", { length: 255 }).notNull().unique(),
     name: varchar("name", { length: 255 }),
     password: varchar("password", { length: 255 }),
+    role: mysqlEnum("role", ["user", "admin", "internal"])
+      .notNull()
+      .default("user"),
   },
   (t) => ({
     emailIdx: index("email_idx").on(t.email),
