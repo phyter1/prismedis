@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { LoginRegisterSchema } from "@prismedis/validators/login-register"
+import { LoginEmailSchema } from "@prismedis/validators/login-register"
 
 import { Button } from "../button"
 import {
@@ -18,22 +18,21 @@ import {
 import { Input } from "../input"
 import { toast } from "../toast"
 
-export function LoginRegisterForm({
+export function LoginEmailForm({
   action,
 }: {
   action: (
-    values: LoginRegisterSchema,
+    values: LoginEmailSchema,
   ) => Promise<{ error?: string; success?: boolean }>
 }) {
-  const form = useForm<LoginRegisterSchema>({
-    resolver: zodResolver(LoginRegisterSchema),
+  const form = useForm<LoginEmailSchema>({
+    resolver: zodResolver(LoginEmailSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   })
 
-  const onSubmit = async (values: LoginRegisterSchema) => {
+  const onSubmit = async (values: LoginEmailSchema) => {
     const res = await action(values)
     if (res?.error) {
       toast.error(res.error, {
@@ -53,22 +52,6 @@ export function LoginRegisterForm({
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input {...field} type="email" />
-              </FormControl>
-              <FormDescription>
-                {/* This is your public display name. */}
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input {...field} type="password" />
               </FormControl>
               <FormDescription>
                 {/* This is your public display name. */}

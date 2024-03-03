@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import { getI18n } from "@prismedis/locales/server"
 import { Button } from "@prismedis/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { LoginRegisterForm } from "@prismedis/ui/forms/login"
+import { LoginEmailForm } from "@prismedis/ui/login-email-form"
 
 import { api } from "@/trpc/server"
 
@@ -14,16 +14,15 @@ export async function generateMetadata() {
     title: t("auth.page_title"),
   }
 }
-const action = async (data: { email: string; password: string }) => {
+const action = async (data: { email: string }) => {
   "use server"
-  const res = await api.auth.login({
+  const res = await api.auth.loginEmail({
     email: data.email,
-    password: data.password,
   })
   if (res.error) {
     return { error: res.error }
   }
-  redirect("/")
+  redirect("/verify")
 }
 export default async function Page() {
   return (
@@ -32,14 +31,14 @@ export default async function Page() {
         <CardTitle>Log in</CardTitle>
       </CardHeader>
       <CardContent className="p-6">
-        <LoginRegisterForm action={action} />
+        <LoginEmailForm action={action} />
         <div className="mt-4 flex items-center text-gray-500">
           <div className="h-[1px] flex-1 bg-gray-200" />
           <p className="mx-4 text-xs">or</p>
           <div className="h-[1px] flex-1 bg-gray-200" />
         </div>
         <Button asChild className="w-full text-xs text-gray-500" variant="link">
-          <Link href="/login-email">Log in with email only</Link>
+          <Link href="/login">Log in with password</Link>
         </Button>
       </CardContent>
     </Card>

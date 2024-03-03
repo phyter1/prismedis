@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { auth } from "@prismedis/auth"
+import { Nav } from "@prismedis/ui/navigation"
 
-import { Nav } from "@/components/navigation"
 import { SiteHeader } from "@/components/site-header"
 import { APP_NAME } from "@/constants"
 
@@ -37,7 +37,7 @@ export default async function RootLayout({
               },
               {
                 link: "/users/settings",
-                text: "Users",
+                text: "Settings",
                 match: "/users/settings",
               },
             ]}

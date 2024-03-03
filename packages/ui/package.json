@@ -10,6 +10,7 @@
     "./card": "./src/card.tsx",
     "./form": "./src/form.tsx",
     "./forms/login": "./src/forms/login-register.tsx",
+    "./login-email-form": "./src/forms/login-email.tsx",
     "./verify-code-form": "./src/forms/verify-code.tsx",
     "./input": "./src/input.tsx",
     "./label": "./src/label.tsx",

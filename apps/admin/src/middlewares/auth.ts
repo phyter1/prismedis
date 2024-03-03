@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 
 const AUTH_EXCLUDE = [
   "/login",
+  "/login-email",
   "/register",
   "/verify",
   "/forgot-password",
