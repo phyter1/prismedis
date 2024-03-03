@@ -1,6 +1,7 @@
 import {
   LoginEmailSchema,
   LoginRegisterSchema,
+  LoginVerificationSchema,
 } from "@prismedis/validators/login-register"
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
@@ -21,8 +22,13 @@ export const authRouter = createTRPCRouter({
   loginEmail: publicProcedure
     .input(LoginEmailSchema)
     .mutation(({ ctx, input }) => {
-      console.log(typeof ctx.auth, input)
-      return {}
+      return ctx.auth.loginEmail(input)
+    }),
+  loginVerify: publicProcedure
+    .input(LoginVerificationSchema)
+    .mutation(({ ctx, input }) => {
+      console.log("input", input)
+      return ctx.auth.loginVerify(input)
     }),
   register: publicProcedure
     .input(LoginRegisterSchema)

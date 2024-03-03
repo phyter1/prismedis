@@ -12,7 +12,11 @@ import { ZodError } from "zod"
 
 import type { AuthResponse } from "@prismedis/auth"
 import { auth } from "@prismedis/auth"
-import { loginAction } from "@prismedis/auth/login"
+import {
+  loginAction,
+  loginEmailAction,
+  loginVerificationAction,
+} from "@prismedis/auth/login"
 import { logoutAction } from "@prismedis/auth/logout"
 import { registerAction } from "@prismedis/auth/register"
 import { db as mongodb } from "@prismedis/db/mongodb"
@@ -45,6 +49,8 @@ export const createTRPCContext = async (opts: {
     mongodb,
     serverSecret,
     auth: {
+      loginEmail: loginEmailAction,
+      loginVerify: loginVerificationAction,
       login: loginAction,
       logout: logoutAction,
       register: registerAction,

@@ -2,7 +2,13 @@ import type { MiddlewareFunction } from "@/middlewares/compose-middleware"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
-const AUTH_EXCLUDE = ["/login", "/register"]
+const AUTH_EXCLUDE = [
+  "/login",
+  "/register",
+  "/verify",
+  "/forgot-password",
+  "/reset-password",
+]
 
 export const handleAuth: MiddlewareFunction = async (request, next) => {
   const pathname = request.nextUrl.pathname

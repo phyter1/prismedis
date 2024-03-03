@@ -10,7 +10,10 @@ const verificationSchema = schema(
     code: types.string({
       required: true,
     }),
-    type: types.enum(["email", "phone"], {
+    type: types.enum(["login", "registration", "password-reset"], {
+      required: true,
+    }),
+    notificationMethod: types.enum(["email", "sms"], {
       required: true,
     }),
   },

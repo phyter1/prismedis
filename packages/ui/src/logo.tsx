@@ -44,10 +44,11 @@ export const Logo = ({
       <h1
         className={cn(
           oxanium.className,
-          "text-xl font-semibold tracking-tight",
+          "pt-1 text-xl font-semibold tracking-tight",
           {
             "text-2xl": size === "md",
-            "text-3xl": size === "lg",
+            "pt-1.5 text-3xl": size === "lg",
+            "pt-2 text-4xl": size === "xl",
           },
         )}
       >
