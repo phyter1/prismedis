@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
+
 import { lucia } from "@prismedis/auth"
 
 const handler = async (req: NextRequest) => {
@@ -12,7 +13,7 @@ const handler = async (req: NextRequest) => {
 
   const { session } = await lucia.validateSession(sessionId)
 
-  if (!session) {
+  if (!session || session.userRole === "user") {
     return NextResponse.json({ valid: false })
   }
 

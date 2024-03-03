@@ -23,15 +23,17 @@ interface Props {
 export const LoginVerificationCodeEmail = ({ code, name }: Props) => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
+      </Head>
       <Preview>
         Verify your email address to complete your {APP_TITLE} login
       </Preview>
 
       <Tailwind config={tailwindConfig}>
-        <Body className="bg-[#f8fafc]">
+        <Body className="font-inter bg-[#f8fafc] antialiased">
           <Container className="mt-10 border bg-white">
-            <Heading className="py-4 text-center font-mono text-3xl tracking-wide">
+            <Heading className="py-4 text-center text-4xl font-light tracking-widest">
               Prismedis
             </Heading>
             <Section>

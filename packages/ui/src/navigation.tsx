@@ -31,9 +31,9 @@ export const Nav = ({ links }: NavProps) => {
                   typeof link.link === "function" ? link.link : undefined
                 }
                 className={cn(
-                  "border-r-none flex w-full rounded-l-lg rounded-r-none border-y-2 border-l-2 p-6 text-primary-foreground hover:bg-white hover:text-primary dark:hover:bg-primary-foreground dark:hover:text-primary",
+                  "border-r-none flex w-full rounded-l-lg rounded-r-none border-y-2 border-l-2 p-6 text-primary-foreground hover:border-primary hover:bg-white hover:text-primary dark:hover:border-white dark:hover:bg-primary-foreground dark:hover:text-primary",
                   {
-                    "bg-white text-primary hover:bg-white  hover:text-primary dark:bg-primary-foreground dark:hover:bg-primary-foreground":
+                    "border-primary bg-white text-primary hover:bg-white  hover:text-primary dark:border-white dark:bg-primary-foreground dark:hover:bg-primary-foreground":
                       isActive,
                   },
                 )}
