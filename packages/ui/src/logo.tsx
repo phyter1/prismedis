@@ -1,5 +1,5 @@
 import { Oxanium } from "next/font/google"
-import { SiPrisma } from "react-icons/si"
+import { IoPrismSharp } from "react-icons/io5"
 
 import { cn } from "./index"
 
@@ -21,7 +21,7 @@ export const Logo = ({
         "gap-3": size === "xl",
       })}
     >
-      <SiPrisma
+      <IoPrismSharp
         className={cn("h-5 w-5 text-primary", {
           "h-6 w-6": size === "md",
           "h-8 w-8": size === "lg",
@@ -29,30 +29,13 @@ export const Logo = ({
         })}
       />
       <h1
-        className={cn(
-          oxanium.className,
-          "pt-1 text-xl font-light tracking-tight",
-          {
-            "text-2xl": size === "md",
-            "pt-1.5 text-3xl": size === "lg",
-            "pt-2 text-4xl": size === "xl",
-          },
-        )}
+        className={cn(oxanium.className, "text-xl font-light tracking-tight", {
+          "text-2xl": size === "md",
+          "pt-1.5 text-3xl": size === "lg",
+          "pt-2 text-4xl": size === "xl",
+        })}
       >
-        Prismedis
-      </h1>
-      <h1
-        className={cn(
-          oxanium.className,
-          "pt-1 text-xl font-semibold tracking-tight",
-          {
-            "text-2xl": size === "md",
-            "pt-1.5 text-3xl": size === "lg",
-            "pt-2 text-4xl": size === "xl",
-          },
-        )}
-      >
-        {appName}
+        Prismedis <span className="font-semibold">{appName}</span>
       </h1>
     </div>
   )

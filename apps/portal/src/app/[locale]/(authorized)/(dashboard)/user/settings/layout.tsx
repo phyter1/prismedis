@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 
 import { Separator } from "@prismedis/ui/separator"
 
-import { SettingsSidebar } from "@/app/[locale]/(authorized)/(dashboard)/users/settings/components/sidebar"
+import { SettingsSidebar } from "@/app/[locale]/(authorized)/(dashboard)/user/settings/components/sidebar"
 
 export const metadata: Metadata = {
   title: "User settings",

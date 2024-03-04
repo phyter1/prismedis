@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 
-import { ChangeLocaleButton } from "@/components/change-language-button"
+import { ChangeLocaleButton } from "./change-language-button"
 
 export function LanguageSwitcher() {
   return (

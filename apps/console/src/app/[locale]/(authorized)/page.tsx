@@ -1,4 +1,4 @@
-export default async function HomePage() {
+export default async function Page() {
   return (
     <main className="container h-screen py-16">
       <div className="flex flex-col items-center justify-center gap-4">

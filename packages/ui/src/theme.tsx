@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { ThemeProvider, useTheme } from "next-themes"
+import { IoMoonSharp, IoSunnySharp } from "react-icons/io5"
 
 import { useI18n } from "@prismedis/locales/client"
 
@@ -22,8 +22,8 @@ function ThemeToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
-          <SunIcon className="size-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <MoonIcon className="absolute size-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <IoSunnySharp className="size-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <IoMoonSharp className="absolute size-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>

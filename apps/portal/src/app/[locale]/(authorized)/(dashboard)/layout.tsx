@@ -3,8 +3,8 @@ import { redirect } from "next/navigation"
 
 import { auth } from "@prismedis/auth"
 import { Nav } from "@prismedis/ui/navigation"
+import { SiteHeader } from "@prismedis/ui/site-header"
 
-import { SiteHeader } from "@/components/site-header"
 import { APP_NAME } from "@/constants"
 
 export const metadata: Metadata = {
@@ -24,24 +24,10 @@ export default async function RootLayout({
 
   return (
     <div className="flex h-full flex-1 flex-col">
-      <SiteHeader appName={APP_NAME} />
+      <SiteHeader appName={APP_NAME} userSettingsHref="/user/settings" />
       <div className="flex h-full w-full flex-1">
         <div>
-          <Nav
-            links={[
-              { link: "/tasks", text: "Tasks", match: "/tasks" },
-              {
-                link: "/email-templates",
-                text: "Email Templates",
-                match: "/email-templates",
-              },
-              {
-                link: "/users/settings",
-                text: "Settings",
-                match: "/users/settings",
-              },
-            ]}
-          />
+          <Nav links={[]} />
         </div>
         <div className="container">{children}</div>
       </div>

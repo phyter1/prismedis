@@ -23,7 +23,7 @@ const connection = mysql.createPool({
   },
 })
 
-export const db = drizzle(connection, { schema, mode: "default" })
+export const db = drizzle(connection, { schema, mode: "planetscale" })
 
 // const connection = mysql.createConnection({
 //   host: process.env.DB_HOST!,

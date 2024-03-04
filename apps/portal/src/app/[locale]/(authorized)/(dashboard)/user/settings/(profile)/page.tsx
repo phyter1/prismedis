@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import {
   UpdateProfileForm,
   UpdateProfileFormSkeletion,
-} from "@/app/[locale]/(authorized)/(dashboard)/users/settings/components/profile"
+} from "@/app/[locale]/(authorized)/(dashboard)/user/settings/components/profile"
 import { api } from "@/trpc/server"
 
 export default async function UsersSettingsPage() {

@@ -1,5 +1,7 @@
 "use client"
 
+import { IoCheckmarkSharp, IoLanguageSharp } from "react-icons/io5"
+
 import { useChangeLocale, useCurrentLocale } from "@prismedis/locales/client"
 import { Button } from "@prismedis/ui/button"
 import {
@@ -9,7 +11,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@prismedis/ui/dropdown-menu"
-import { CheckIcon, LanguagesIcon } from "lucide-react"
 
 export function ChangeLocaleButton() {
   const changeLocale = useChangeLocale({ preserveSearchParams: true })
@@ -18,7 +19,7 @@ export function ChangeLocaleButton() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
-          <LanguagesIcon className="size-5" />
+          <IoLanguageSharp className="size-5" />
           <span className="sr-only">Change language</span>
         </Button>
       </DropdownMenuTrigger>
@@ -28,7 +29,7 @@ export function ChangeLocaleButton() {
 
           {currentLanguage === "de" && (
             <DropdownMenuShortcut>
-              <CheckIcon className="size-4" />
+              <IoCheckmarkSharp className="size-4" />
             </DropdownMenuShortcut>
           )}
         </DropdownMenuItem>
@@ -37,7 +38,7 @@ export function ChangeLocaleButton() {
           <span>EN</span>
           {currentLanguage === "en" && (
             <DropdownMenuShortcut>
-              <CheckIcon className="size-4" />
+              <IoCheckmarkSharp className="size-4" />
             </DropdownMenuShortcut>
           )}
         </DropdownMenuItem>

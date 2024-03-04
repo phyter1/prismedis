@@ -1,12 +1,17 @@
+import type { PropsWithChildren } from "react"
 import Link from "next/link"
 
 import { Logo } from "@prismedis/ui/logo"
 import { ThemeToggle } from "@prismedis/ui/theme"
 
-import { LanguageSwitcher } from "@/components/language-switcher"
-import { SignOut } from "./sign-out"
+import { LanguageSwitcher } from "./language-switcher"
+import { UserSettings } from "./user-settings"
 
-export function SiteHeader({ appName }: { appName: string }) {
+export function SiteHeader({
+  appName,
+  userSettingsHref,
+  children,
+}: PropsWithChildren<{ appName: string; userSettingsHref: string }>) {
   return (
     <header className=" sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container">
@@ -15,12 +20,12 @@ export function SiteHeader({ appName }: { appName: string }) {
           aria-label="Global"
         >
           <Link href="/" className="-m-1.5 p-1.5">
-            <Logo appName={appName} />
+            <Logo appName={appName} size="sm" />
           </Link>
 
           <div className="flex gap-1">
-            <SignOut />
-            {/* <UserMenu /> */}
+            {children}
+            <UserSettings href={userSettingsHref} />
             <LanguageSwitcher />
             <ThemeToggle />
           </div>

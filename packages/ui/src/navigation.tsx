@@ -1,5 +1,6 @@
 "use client"
 
+import { ReactNode } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -11,6 +12,7 @@ export interface NavProps {
     link: string
     text: string
     match?: string
+    icon?: ReactNode
   }[]
 }
 
@@ -31,7 +33,7 @@ export const Nav = ({ links }: NavProps) => {
                   typeof link.link === "function" ? link.link : undefined
                 }
                 className={cn(
-                  "border-r-none flex w-full rounded-l-lg rounded-r-none border-y-2 border-l-2 p-6 text-primary-foreground hover:border-primary hover:bg-white hover:text-primary dark:hover:border-white dark:hover:bg-primary-foreground dark:hover:text-primary",
+                  "border-r-none flex w-full rounded-l-lg rounded-r-none border-y-2 border-l-2 p-6 text-lg font-light text-primary-foreground hover:border-primary hover:bg-white hover:text-primary dark:hover:border-white dark:hover:bg-primary-foreground dark:hover:text-primary",
                   {
                     "border-primary bg-white text-primary hover:bg-white  hover:text-primary dark:border-white dark:bg-primary-foreground dark:hover:bg-primary-foreground":
                       isActive,
@@ -39,6 +41,7 @@ export const Nav = ({ links }: NavProps) => {
                 )}
               >
                 <Link href={typeof link.link === "string" ? link.link : ""}>
+                  {link.icon ?? null}
                   <p className="w-full text-left ">{link.text}</p>
                 </Link>
               </Button>

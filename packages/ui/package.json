@@ -30,7 +30,12 @@
     "./table": "./src/table.tsx",
     "./app-icon": "./src/app/icon.tsx",
     "./app-robots": "./src/app/robots.tsx",
-    "./navigation": "./src/navigation.tsx"
+    "./navigation": "./src/navigation.tsx",
+    "./user-settings": "./src/user-settings.tsx",
+    "./site-header": "./src/site-header.tsx",
+    "./sign-out": "./src/sign-out.tsx",
+    "./spinner": "./src/spinner.tsx",
+    "./language-switcher": "./src/language-switcher.tsx"
   },
   "license": "MIT",
   "scripts": {
