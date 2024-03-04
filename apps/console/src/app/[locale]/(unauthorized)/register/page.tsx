@@ -1,6 +1,19 @@
-import { providers } from "@prismedis/auth"
+import { redirect } from "next/navigation"
+
+import type { LoginRegisterSchema } from "@prismedis/validators/login-register"
 import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
 import { LoginRegisterForm } from "@prismedis/ui/forms/login"
+
+import { api } from "@/trpc/server"
+
+const action = async (data: LoginRegisterSchema) => {
+  "use server"
+  const res = await api.auth.register(data)
+  if (res.error) {
+    return { error: res.error }
+  }
+  redirect("/")
+}
 
 export default async function Page() {
   return (
@@ -9,7 +22,7 @@ export default async function Page() {
         <CardTitle>Register</CardTitle>
       </CardHeader>
       <CardContent className="p-6">
-        <LoginRegisterForm action={providers.email.registerAction} />
+        <LoginRegisterForm action={action} />
       </CardContent>
     </Card>
   )

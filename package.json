@@ -11,7 +11,8 @@
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
     "db:push": "pnpm -F db push",
-    "db:studio": "pnpm -F db studio",
+    "mysql:studio": "pnpm -F db studio",
+    "mongodb:studio": "pnpm exec mongo-gui -u $MONGODB_URI",
     "dev": "turbo dev --parallel",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
     "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
@@ -26,12 +27,15 @@
     "lang:gen": "pnpm -F locales generate",
     "ui:add": "pnpm --filter ui ui:add",
     "docker:start:scheduler": "docker run -it -p 8081:8081 prismedis/scheduler:latest",
-    "docker:build:scheduler": "docker build -t prismedis/scheduler:latest --build-arg PROJECT=scheduler-server --build-arg PORT=8081 ."
+    "docker:build:scheduler": "docker build -t prismedis/scheduler:latest --build-arg PROJECT=scheduler-server --build-arg PORT=8081 .",
+    "with-env": "dotenv -e ./.env --"
   },
   "devDependencies": {
     "@prismedis/prettier-config": "workspace:*",
-    "@types/node": "20.11.20",
     "@turbo/gen": "1.12.4",
+    "@types/node": "20.11.20",
+    "dotenv-cli": "7.3.0",
+    "mongo-gui": "^0.0.20",
     "prettier": "3.2.5",
     "sherif": "0.8.1",
     "turbo": "1.12.4",

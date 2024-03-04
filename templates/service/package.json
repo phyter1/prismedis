@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "tsup --watch --onSuccess \"node dist/index.js\"",
+    "start": "pnpm with-env node dist/index.js",
+    "dev": "pnpm with-env tsup-node --watch --onSuccess \"node dist/index.js\"",
     "build": "tsup",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/",
-    "test": "jest --detectOpenHandles"
+    "with-env": "dotenv -e ../../.env --",
+    "docker:start": "docker run -it -p 8080:8080 prismedis/service:latest",
+    "docker:build": "docker build -t prismedis/service:latest --build-arg PROJECT=service --build-arg PORT=8080 ."
   },
   "eslintConfig": {
     "extends": [
@@ -24,5 +26,8 @@
     "@types/node": "20.11.20",
     "tsup": "^8.0.2",
     "typescript": "5.3.3"
+  },
+  "dependencies": {
+    "@prismedis/constants": "workspace:*"
   }
 }

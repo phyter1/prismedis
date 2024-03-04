@@ -1,13 +1,16 @@
 {
-  "extends": "@prismedis/tsconfig/base.json",
+  "extends": "@prismedis/tsconfig/service.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "lib": [
+      "ESNext"
+    ],
+    "module": "ESNext",
+    "outDir": "./dist",
   },
-  "include": [
-    "*.ts",
-    "src"
-  ],
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "."
   ]
 }

@@ -1,0 +1,28 @@
+{
+  "name": "@prismedis/service",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsup --watch --onSuccess \"node dist/index.js\"",
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "test": "jest --detectOpenHandles"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@prismedis/eslint-config/base"
+    ]
+  },
+  "prettier": "@prismedis/prettier-config",
+  "devDependencies": {
+    "@prismedis/eslint-config": "workspace:*",
+    "@prismedis/prettier-config": "workspace:*",
+    "@prismedis/tsconfig": "workspace:*",
+    "@types/node": "20.11.20",
+    "tsup": "^8.0.2",
+    "typescript": "5.3.3"
+  }
+}

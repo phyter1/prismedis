@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { APP_DESCRIPTION, APP_TITLE } from "@prismedis/constants"
+
 import { cn } from "@prismedis/ui"
 import { TailwindIndicator } from "@prismedis/ui/tailwind-indicator"
 import { ThemeProvider } from "@prismedis/ui/theme"
@@ -9,10 +9,12 @@ import { TRPCReactProvider } from "@/trpc/react"
 
 import "@/app/globals.css"
 
+import { APP_DESCRIPTION, APP_NAME } from "@/constants"
+
 export const metadata: Metadata = {
   title: {
-    default: APP_TITLE,
-    template: `${APP_TITLE} | %s`,
+    default: APP_NAME,
+    template: `${APP_NAME} | %s`,
   },
   description: APP_DESCRIPTION,
   icons: [{ rel: "icon", url: "/icon.png" }],

@@ -4,6 +4,8 @@ import { redirect } from "next/navigation"
 import { auth } from "@prismedis/auth"
 import { Logo as PrismedisLogo } from "@prismedis/ui/logo"
 
+import { APP_NAME } from "@/constants"
+
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await auth()
 
@@ -20,7 +22,7 @@ export default async function Layout({ children }: PropsWithChildren) {
       <div className="relative hidden h-full flex-col bg-muted p-10 dark:border-r dark:text-white lg:flex">
         <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-900" />
         <div className="relative flex flex-1 items-center justify-center">
-          <PrismedisLogo size="xl" appName={"Console"} />
+          <PrismedisLogo size="xl" appName={APP_NAME} />
         </div>
       </div>
 
@@ -28,7 +30,7 @@ export default async function Layout({ children }: PropsWithChildren) {
         <div className="mx-auto flex  w-[21.875rem] flex-col justify-center space-y-6">
           <div className="flex flex-col space-y-2 text-center">
             <div className="mb-10 flex justify-center lg:hidden">
-              <PrismedisLogo size="md" appName={"Console"} />
+              <PrismedisLogo size="md" appName={APP_NAME} />
             </div>
             {children}
           </div>

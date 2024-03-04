@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/site-header"
 import { APP_NAME } from "@/constants"
 
 export const metadata: Metadata = {
-  title: "Console",
+  title: "Dashboard",
 }
 
 export default async function RootLayout({
