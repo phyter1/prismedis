@@ -1,0 +1,43 @@
+{
+  "name": "@prismedis/scheduler-server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "pnpm with-env node dist/index.js",
+    "dev": "pnpm with-env tsup-node --watch --onSuccess \"node dist/index.js\"",
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "test": "jest --detectOpenHandles",
+    "with-env": "dotenv -e ../../.env --",
+    "docker:start": "docker run -it -p 8081:8081 prismedis/scheduler:latest",
+    "docker:build": "docker build -t prismedis/scheduler:latest --build-arg PROJECT=scheduler-server --build-arg PORT=8081 ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "@prismedis/eslint-config/base"
+    ]
+  },
+  "prettier": "@prismedis/prettier-config",
+  "devDependencies": {
+    "@prismedis/eslint-config": "workspace:*",
+    "@prismedis/prettier-config": "workspace:*",
+    "@prismedis/tsconfig": "workspace:*",
+    "@types/express": "^4.17.21",
+    "@types/node": "20.11.20",
+    "tsup": "^8.0.2",
+    "typescript": "5.3.3"
+  },
+  "dependencies": {
+    "@bull-board/api": "^5.14.2",
+    "@bull-board/hono": "^5.14.2",
+    "@bull-board/ui": "^5.14.2",
+    "@hono/node-server": "^1.8.2",
+    "@prismedis/constants": "workspace:*",
+    "@prismedis/scheduler": "workspace:*",
+    "bullmq": "^5.4.1",
+    "dotenv-cli": "7.3.0",
+    "hono": "^4.0.9"
+  }
+}

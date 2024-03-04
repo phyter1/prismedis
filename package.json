@@ -24,7 +24,9 @@
     "deps:check": "pnpm outdated -r",
     "deps:update": "pnpm update -i -L -r",
     "lang:gen": "pnpm -F locales generate",
-    "ui:add": "pnpm --filter ui ui:add"
+    "ui:add": "pnpm --filter ui ui:add",
+    "docker:start:scheduler": "docker run -it -p 8081:8081 prismedis/scheduler:latest",
+    "docker:build:scheduler": "docker build -t prismedis/scheduler:latest --build-arg PROJECT=scheduler-server --build-arg PORT=8081 ."
   },
   "devDependencies": {
     "@prismedis/prettier-config": "workspace:*",
