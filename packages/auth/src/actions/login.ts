@@ -2,7 +2,7 @@ import { cookies, headers } from "next/headers"
 import { Scrypt } from "lucia"
 
 import { db as mongodb } from "@prismedis/db/mongodb"
-import { db as mysql } from "@prismedis/db/mysql"
+import { db as postgres } from "@prismedis/db/postgres"
 import { email as emailer } from "@prismedis/messaging"
 import {
   LoginEmailSchema,
@@ -34,7 +34,7 @@ export const loginAction = async (formData: LoginRegisterSchema) => {
         "Invalid email or password",
     }
   }
-  const user = await mysql.query.users.findFirst({
+  const user = await postgres.query.users.findFirst({
     where: (users, { eq }) => {
       return eq(users.email, email)
     },
@@ -64,7 +64,7 @@ export const loginAction = async (formData: LoginRegisterSchema) => {
   const session = await lucia.createSession(user.id, {
     userAgent,
     ipAddress,
-    userRole: user.role,
+    userRole: user.role ?? "user",
   })
   const sessionCookie = lucia.createSessionCookie(session.id)
   cookies().set(
@@ -93,7 +93,7 @@ export const loginEmailAction = async ({ email }: { email: string }) => {
       error: error.email?._errors?.[0] ?? "Invalid email",
     }
   }
-  const user = await mysql.query.users.findFirst({
+  const user = await postgres.query.users.findFirst({
     where: (users, { eq }) => {
       return eq(users.email, email)
     },
@@ -149,7 +149,7 @@ export const loginVerificationAction = async ({ code }: { code: string }) => {
       error: "Invalid code",
     }
   }
-  const user = await mysql.query.users.findFirst({
+  const user = await postgres.query.users.findFirst({
     where(fields, { eq }) {
       return eq(fields.id, verification.user)
     },
@@ -182,7 +182,7 @@ export const loginVerificationAction = async ({ code }: { code: string }) => {
   const session = await lucia.createSession(verification.user, {
     userAgent,
     ipAddress,
-    userRole: user.role,
+    userRole: user.role ?? "user",
   })
   const sessionCookie = lucia.createSessionCookie(session.id)
   cookies().set(

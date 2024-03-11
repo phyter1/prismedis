@@ -1,15 +1,17 @@
+import type { PostgreSQLSessionTable } from "@lucia-auth/adapter-drizzle"
 import type { Session, User } from "lucia"
 import { cache } from "react"
 import { cookies } from "next/headers"
-import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle"
+import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle"
 import { Lucia } from "lucia"
 
-import { db, schema } from "@prismedis/db/mysql"
+import { db, schema } from "@prismedis/db/postgres"
 
-import * as discordProvider from "./providers/discord"
-import * as githubProvider from "./providers/github"
-
-const adapter = new DrizzleMySQLAdapter(db, schema.sessions, schema.users)
+const adapter = new DrizzlePostgreSQLAdapter(
+  db,
+  schema.sessions as unknown as PostgreSQLSessionTable,
+  schema.users,
+)
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
@@ -67,13 +69,6 @@ export const auth = cache(async (): Promise<AuthResponse> => {
   }
   return result
 })
-
-export const providers = {
-  github: githubProvider,
-  discord: discordProvider,
-} as const
-
-export type Providers = keyof typeof providers
 
 export type LuciaUser = User
 

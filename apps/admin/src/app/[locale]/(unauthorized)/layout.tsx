@@ -1,8 +1,10 @@
 import type { PropsWithChildren } from "react"
+import { Suspense } from "react"
 import { redirect } from "next/navigation"
 
 import { auth } from "@prismedis/auth"
 import { Logo as PrismedisLogo } from "@prismedis/ui/logo"
+import { Spinner } from "@prismedis/ui/spinner"
 
 import { APP_NAME } from "@/constants"
 
@@ -28,7 +30,7 @@ export default async function Layout({ children }: PropsWithChildren) {
             <div className="mb-10 flex justify-center lg:hidden">
               <PrismedisLogo size="md" appName={APP_NAME} />
             </div>
-            {children}
+            <Suspense fallback={<Spinner />}>{children}</Suspense>
           </div>
         </div>
       </div>

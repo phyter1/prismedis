@@ -20,7 +20,7 @@ import {
 import { logoutAction } from "@prismedis/auth/logout"
 import { registerAction } from "@prismedis/auth/register"
 import { db as mongodb } from "@prismedis/db/mongodb"
-import { db as mysql } from "@prismedis/db/mysql"
+import { db as postgres } from "@prismedis/db/postgres"
 
 /**
  * 1. CONTEXT
@@ -45,7 +45,7 @@ export const createTRPCContext = async (opts: {
   const serverSecret = process.env.SERVER_SECRET
   return {
     session,
-    mysql,
+    postgres,
     mongodb,
     serverSecret,
     auth: {
@@ -134,7 +134,7 @@ export const internalProcedure = t.procedure.use(async ({ ctx, next }) => {
   if (!ctx.session.user?.id) {
     throw new TRPCError({ code: "UNAUTHORIZED" })
   }
-  const user = await mysql.query.users.findFirst({
+  const user = await postgres.query.users.findFirst({
     where(fields, operators) {
       return operators.and(
         operators.eq(fields.id, ctx.session.user?.id ?? ""),

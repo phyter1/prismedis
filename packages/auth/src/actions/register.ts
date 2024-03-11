@@ -1,7 +1,8 @@
-import { cookies } from "next/headers"
-import { db, schema } from "@prismedis/db/mysql"
-import { LoginRegisterSchema } from "@prismedis/validators/login-register"
+import { cookies, headers } from "next/headers"
 import { generateId, Scrypt } from "lucia"
+
+import { db, schema } from "@prismedis/db/postgres"
+import { LoginRegisterSchema } from "@prismedis/validators/login-register"
 
 import { lucia } from ".."
 
@@ -51,14 +52,42 @@ export const registerAction = async (formData: LoginRegisterSchema) => {
         password: hashedPassword,
       })
     })
-  } catch {
+  } catch (err) {
+    console.log("User insert error")
+    console.log(err)
     return {
       error: "User already exists",
     }
   }
+  const user = await db.query.users.findFirst({
+    where: (users, { eq }) => {
+      return eq(users.id, userId)
+    },
+  })
+  if (!user) {
+    return {
+      error: "User not found",
+    }
+  }
+  const header = headers()
+  const ipAddress =
+    header.get("x-real-ip") ??
+    header.get("x-forwarded-for") ??
+    header.get("cf-connecting-ip") ??
+    header.get("fastly-client-ip") ??
+    header.get("true-client-ip") ??
+    header.get("x-client-ip") ??
+    header.get("x-cluster-client-ip") ??
+    header.get("x-forwarded") ??
+    header.get("forwarded-for") ??
+    header.get("forwarded") ??
+    header.get("via") ??
+    "unknown"
+  const userAgent = header.get("user-agent") ?? "unknown"
   const session = await lucia.createSession(userId, {
-    userAgent: "unknown",
-    ipAddress: "unknown",
+    userRole: user?.role ?? "user",
+    userAgent,
+    ipAddress,
   })
   const sessionCookie = lucia.createSessionCookie(session.id)
   cookies().set(
