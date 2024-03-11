@@ -10,7 +10,7 @@ export const schema = {
 }
 
 const pool = new Pool({
-  connectionString: process.env.NEON_URL,
+  connectionString: process.env.NEON_URL ?? process.env.DATABASE_URL,
 })
 
 export const db = drizzle(pool, { schema })
