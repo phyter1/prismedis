@@ -1,34 +1,36 @@
-import type { PropsWithChildren } from "react"
-import { redirect } from "next/navigation"
-import { auth } from "@prismedis/auth"
-import { Logo as PrismedisLogo } from "@prismedis/ui/logo"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@prismedis/components/card"
+import { VerifyCodeForm } from "@prismedis/components/verify-code-form"
+import { getI18n } from "@prismedis/locales/server"
 
-export default async function Layout({ children }: PropsWithChildren) {
-  const session = await auth()
+import { api } from "@/trpc/server"
 
-  if (session.user) {
-    redirect("/")
+export async function generateMetadata() {
+  const t = await getI18n()
+  return {
+    title: t("auth.page_title"),
   }
-
+}
+const action = async (data: { code: string }) => {
+  "use server"
+  console.log("data", data)
+  return api.auth.loginVerify({
+    code: data.code,
+  })
+}
+export default async function Page() {
   return (
-    <div className="container relative  grid h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="relative hidden h-full flex-col bg-muted p-10 dark:border-r dark:text-white lg:flex">
-        <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-900" />
-        <div className="relative flex flex-1 items-center justify-center">
-          <PrismedisLogo />
-        </div>
-      </div>
-
-      <div className="lg:p-8">
-        <div className="mx-auto flex  w-[21.875rem] flex-col justify-center space-y-6">
-          <div className="flex flex-col space-y-2 text-center">
-            <div className="mb-10 flex justify-center lg:hidden">
-              <PrismedisLogo />
-            </div>
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Verify Code</CardTitle>
+      </CardHeader>
+      <CardContent className="p-6">
+        <VerifyCodeForm action={action} />
+      </CardContent>
+    </Card>
   )
 }

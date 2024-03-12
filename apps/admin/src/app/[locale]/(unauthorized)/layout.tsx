@@ -3,8 +3,8 @@ import { Suspense } from "react"
 import { redirect } from "next/navigation"
 
 import { auth } from "@prismedis/auth"
-import { Logo as PrismedisLogo } from "@prismedis/ui/logo"
-import { Spinner } from "@prismedis/ui/spinner"
+import { Logo as PrismedisLogo } from "@prismedis/components/logo"
+import { Spinner } from "@prismedis/components/spinner"
 
 import { APP_NAME } from "@/constants"
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { Separator } from "@prismedis/ui/separator"
+import { Separator } from "@prismedis/components/separator"
 
 import { SettingsSidebar } from "@/app/[locale]/(authorized)/user/settings/components/sidebar"
 

@@ -1,6 +1,6 @@
 import { providers } from "@prismedis/auth"
-import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { LoginRegisterForm } from "@prismedis/ui/forms/login"
+import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/components/card"
+import { LoginRegisterForm } from "@prismedis/components/forms/login"
 
 export default async function Page() {
   return (

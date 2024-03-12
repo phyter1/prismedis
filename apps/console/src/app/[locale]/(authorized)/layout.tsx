@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { auth } from "@prismedis/auth"
-import { SignOutButton } from "@prismedis/ui/sign-out"
-import { SiteHeader } from "@prismedis/ui/site-header"
+import { SignOutButton } from "@prismedis/components/sign-out"
+import { SiteHeader } from "@prismedis/components/site-header"
 
 import { APP_NAME } from "@/constants"
 import { api } from "@/trpc/server"

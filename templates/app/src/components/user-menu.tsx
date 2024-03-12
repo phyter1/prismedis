@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { useI18n } from "@prismedis/locales/client"
-import { Button } from "@prismedis/ui/button"
+import { UserIcon } from "lucide-react"
+
+import { Button } from "@prismedis/components/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +12,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@prismedis/ui/dropdown-menu"
-import { UserIcon } from "lucide-react"
+} from "@prismedis/components/dropdown-menu"
+import { useI18n } from "@prismedis/locales/client"
 
 import { logoutAction } from "@/actions/logout"
 import { api } from "@/trpc/react"

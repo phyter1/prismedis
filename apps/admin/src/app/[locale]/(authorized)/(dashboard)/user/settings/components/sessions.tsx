@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import type { RouterOutputs } from "@prismedis/api"
-import { use } from "react"
-import { userAgentFromString } from "next/server"
-import { Button } from "@prismedis/ui/button"
-import { Skeleton } from "@prismedis/ui/skeleton"
-import { toast } from "@prismedis/ui/toast"
-import { MonitorIcon, SmartphoneIcon, Trash2Icon } from "lucide-react"
+import type { RouterOutputs } from "@prismedis/api";
+import { use } from "react";
+import { userAgentFromString } from "next/server";
+import { Button } from "@prismedis/components/button";
+import { Skeleton } from "@prismedis/components/skeleton";
+import { toast } from "@prismedis/components/toast";
+import { MonitorIcon, SmartphoneIcon, Trash2Icon } from "lucide-react";
 
-import { api } from "@/trpc/react"
+import { api } from "@/trpc/react";
 
 export function SessionList(props: {
-  sessions: Promise<RouterOutputs["user"]["sessions"]>
-  sessionId: string
+  sessions: Promise<RouterOutputs["user"]["sessions"]>;
+  sessionId: string;
 }) {
   // TODO: Make `useSuspenseQuery` work without having to pass a promise from RSC
-  const initialData = use(props.sessions)
+  const initialData = use(props.sessions);
   const { data: sessions } = api.user.sessions.useQuery(undefined, {
     initialData,
-  })
+  });
 
   return (
     <>
@@ -29,35 +29,35 @@ export function SessionList(props: {
             session={session}
             sessionId={props.sessionId}
           />
-        )
+        );
       })}
     </>
-  )
+  );
 }
 
 export function SessionCard(props: {
-  session: RouterOutputs["user"]["sessions"][number]
-  sessionId: string
+  session: RouterOutputs["user"]["sessions"][number];
+  sessionId: string;
 }) {
-  const utils = api.useUtils()
+  const utils = api.useUtils();
   const deleteSession = api.user.deleteSession.useMutation({
     onSuccess: async () => {
-      await utils.user.invalidate()
+      await utils.user.invalidate();
     },
     onError: (err) => {
       toast.error(
         err?.data?.code === "UNAUTHORIZED"
           ? "You must be logged in to manage your session"
           : "Failed to delete selected session",
-      )
+      );
     },
-  })
+  });
 
-  const ua = userAgentFromString(props.session.userAgent ?? "")
+  const ua = userAgentFromString(props.session.userAgent ?? "");
   const isMobile = () =>
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       props.session.userAgent ?? "",
-    )
+    );
 
   return (
     <div className=" flex w-full items-center space-x-4 rounded-md border p-4">
@@ -78,14 +78,14 @@ export function SessionCard(props: {
           size="icon"
           variant="destructive"
           onClick={() => {
-            deleteSession.mutate({ sessionId: props.session.id })
+            deleteSession.mutate({ sessionId: props.session.id });
           }}
         >
           <Trash2Icon className="h-4 w-4" />
         </Button>
       )}
     </div>
-  )
+  );
 }
 
 export const SessionCardSkeleton = () => {
@@ -102,5 +102,5 @@ export const SessionCardSkeleton = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};

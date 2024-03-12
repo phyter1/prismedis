@@ -1,12 +1,13 @@
 "use client"
 
-import type { RouterOutputs } from "@prismedis/api"
 import { use } from "react"
 import { userAgentFromString } from "next/server"
-import { Button } from "@prismedis/ui/button"
-import { Skeleton } from "@prismedis/ui/skeleton"
-import { toast } from "@prismedis/ui/toast"
 import { MonitorIcon, SmartphoneIcon, Trash2Icon } from "lucide-react"
+
+import type { RouterOutputs } from "@prismedis/api"
+import { Button } from "@prismedis/components/button"
+import { Skeleton } from "@prismedis/components/skeleton"
+import { toast } from "@prismedis/components/toast"
 
 import { api } from "@/trpc/react"
 

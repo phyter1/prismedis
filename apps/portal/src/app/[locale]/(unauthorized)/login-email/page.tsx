@@ -1,10 +1,11 @@
-import Link from "next/link"
-import { redirect } from "next/navigation"
-
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@prismedis/components/card"
+import { VerifyCodeForm } from "@prismedis/components/verify-code-form"
 import { getI18n } from "@prismedis/locales/server"
-import { Button } from "@prismedis/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { LoginEmailForm } from "@prismedis/ui/login-email-form"
 
 import { api } from "@/trpc/server"
 
@@ -14,32 +15,21 @@ export async function generateMetadata() {
     title: t("auth.page_title"),
   }
 }
-const action = async (data: { email: string }) => {
+const action = async (data: { code: string }) => {
   "use server"
-  const res = await api.auth.loginEmail({
-    email: data.email,
+  console.log("data", data)
+  return api.auth.loginVerify({
+    code: data.code,
   })
-  if (res.error) {
-    return { error: res.error }
-  }
-  redirect("/verify")
 }
 export default async function Page() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Log in</CardTitle>
+        <CardTitle>Verify Code</CardTitle>
       </CardHeader>
       <CardContent className="p-6">
-        <LoginEmailForm action={action} />
-        <div className="mt-4 flex items-center text-gray-500">
-          <div className="h-[1px] flex-1 bg-gray-200" />
-          <p className="mx-4 text-xs">or</p>
-          <div className="h-[1px] flex-1 bg-gray-200" />
-        </div>
-        <Button asChild className="w-full text-xs text-gray-500" variant="link">
-          <Link href="/login">Log in with password</Link>
-        </Button>
+        <VerifyCodeForm action={action} />
       </CardContent>
     </Card>
   )

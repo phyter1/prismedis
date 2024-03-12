@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next"
 
-import { cn } from "@prismedis/ui"
-import { TailwindIndicator } from "@prismedis/ui/tailwind-indicator"
-import { ThemeProvider } from "@prismedis/ui/theme"
-import { Toaster } from "@prismedis/ui/toast"
+import { cn } from "@prismedis/components"
+import { TailwindIndicator } from "@prismedis/components/tailwind-indicator"
+import { ThemeProvider } from "@prismedis/components/theme"
+import { Toaster } from "@prismedis/components/toast"
 
 import { TRPCReactProvider } from "@/trpc/react"
 

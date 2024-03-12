@@ -1,46 +1,55 @@
-import Link from "next/link"
-import { redirect } from "next/navigation"
+import type { Metadata, Viewport } from "next"
 
-import { getI18n } from "@prismedis/locales/server"
-import { Button } from "@prismedis/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { LoginEmailForm } from "@prismedis/ui/login-email-form"
+import { cn } from "@prismedis/components"
+import { TailwindIndicator } from "@prismedis/components/tailwind-indicator"
+import { ThemeProvider } from "@prismedis/components/theme"
+import { Toaster } from "@prismedis/components/toast"
+import { APP_DESCRIPTION, APP_TITLE } from "@prismedis/constants"
 
-import { api } from "@/trpc/server"
+import { TRPCReactProvider } from "@/trpc/react"
 
-export async function generateMetadata() {
-  const t = await getI18n()
-  return {
-    title: t("auth.page_title"),
-  }
+import "@/app/globals.css"
+
+export const metadata: Metadata = {
+  title: {
+    default: APP_TITLE,
+    template: `${APP_TITLE} | %s`,
+  },
+  description: APP_DESCRIPTION,
+  icons: [{ rel: "icon", url: "/icon.png" }],
 }
-const action = async (data: { email: string }) => {
-  "use server"
-  const res = await api.auth.loginEmail({
-    email: data.email,
-  })
-  if (res.error) {
-    return { error: res.error }
-  }
-  redirect("/verify")
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
 }
-export default async function Page() {
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Log in</CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <LoginEmailForm action={action} />
-        <div className="mt-4 flex items-center text-gray-500">
-          <div className="h-[1px] flex-1 bg-gray-200" />
-          <p className="mx-4 text-xs">or</p>
-          <div className="h-[1px] flex-1 bg-gray-200" />
-        </div>
-        <Button asChild className="w-full text-xs text-gray-500" variant="link">
-          <Link href="/login">Log in with password</Link>
-        </Button>
-      </CardContent>
-    </Card>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans text-foreground antialiased",
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TailwindIndicator />
+
+          <Toaster />
+        </ThemeProvider>
+      </body>
+    </html>
   )
 }

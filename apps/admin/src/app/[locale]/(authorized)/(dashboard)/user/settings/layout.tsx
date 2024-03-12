@@ -1,47 +1,68 @@
-import type { Metadata } from "next"
+"use client"
 
-import { Separator } from "@prismedis/ui/separator"
+import Link from "next/link"
+import { UserIcon } from "lucide-react"
 
-import { SettingsSidebar } from "@/app/[locale]/(authorized)/(dashboard)/user/settings/components/sidebar"
+import { Button } from "@prismedis/components/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@prismedis/components/dropdown-menu"
+import { useI18n } from "@prismedis/locales/client"
 
-export const metadata: Metadata = {
-  title: "User settings",
-  description: "Advanced form example using react-hook-form and Zod.",
-}
+import { logoutAction } from "@/actions/logout"
+import { api } from "@/trpc/react"
 
-const navItems = [
-  {
-    title: "Profile",
-    href: "/user/settings",
-  },
-  {
-    title: "Sessions",
-    href: "/user/settings/sessions",
-  },
-]
+export function UserMenu() {
+  const t = useI18n()
+  const { data: user } = api.user.profile.useQuery()
 
-interface SettingsLayoutProps {
-  children: React.ReactNode
-}
+  const logout = () => {
+    console.log("logout")
+    logoutAction().catch((err) => {
+      console.error("Failed to logout", err)
+    })
+  }
 
-export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
-    <>
-      <div className="space-y-6 py-16">
-        <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-          <p className="text-muted-foreground">Manage your account settings</p>
-        </div>
-        <Separator className="my-6" />
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="lg:w-1/5">
-            <SettingsSidebar items={navItems} />
-          </aside>
-          <div className="flex-1">
-            <div className="mx-auto flex w-full lg:max-w-2xl">{children}</div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <UserIcon />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p
+              className="text-sm leading-none"
+              dangerouslySetInnerHTML={{
+                __html: t("welcome", { name: user?.name }),
+              }}
+            ></p>
           </div>
-        </div>
-      </div>
-    </>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Link href="/users/settings">{t("common.settings")}</Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <form action={logout}>
+          <DropdownMenuItem>
+            <button>{t("auth.signout")}</button>
+          </DropdownMenuItem>
+        </form>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

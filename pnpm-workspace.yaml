@@ -1,5 +1,8 @@
 packages:
   - apps/*
-  - packages/*
-  - services/*
+  - core/services/*
+  - core/libraries/*
+  - domain/services/*
+  - domain/libraries/*
   - tooling/*
+  - ui/*

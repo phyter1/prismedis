@@ -21,7 +21,7 @@
     "@prismedis/db": "workspace:*",
     "@prismedis/locales": "workspace:*",
     "@prismedis/messaging": "workspace:*",
-    "@prismedis/ui": "workspace:*",
+    "@prismedis/components": "workspace:*",
     "@prismedis/utils": "workspace:*",
     "@prismedis/validators": "workspace:*",
     "@t3-oss/env-nextjs": "0.9.2",

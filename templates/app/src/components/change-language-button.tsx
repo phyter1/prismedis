@@ -1,14 +1,14 @@
 "use client"
 
 import { useChangeLocale, useCurrentLocale } from "@prismedis/locales/client"
-import { Button } from "@prismedis/ui/button"
+import { Button } from "@prismedis/components/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@prismedis/ui/dropdown-menu"
+} from "@prismedis/components/dropdown-menu"
 import { CheckIcon, LanguagesIcon } from "lucide-react"
 
 export function ChangeLocaleButton() {

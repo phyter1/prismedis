@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { auth } from "@prismedis/auth"
-import { Nav } from "@prismedis/ui/navigation"
-import { SiteHeader } from "@prismedis/ui/site-header"
+import { Nav } from "@prismedis/components/navigation"
+import { SiteHeader } from "@prismedis/components/site-header"
 
 import { APP_NAME } from "@/constants"
 

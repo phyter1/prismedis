@@ -1,31 +1,68 @@
-import { getI18n } from "@prismedis/locales/server"
-import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { VerifyCodeForm } from "@prismedis/ui/verify-code-form"
+"use client"
 
-import { api } from "@/trpc/server"
+import Link from "next/link"
+import { UserIcon } from "lucide-react"
 
-export async function generateMetadata() {
-  const t = await getI18n()
-  return {
-    title: t("auth.page_title"),
+import { Button } from "@prismedis/components/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@prismedis/components/dropdown-menu"
+import { useI18n } from "@prismedis/locales/client"
+
+import { logoutAction } from "@/actions/logout"
+import { api } from "@/trpc/react"
+
+export function UserMenu() {
+  const t = useI18n()
+  const { data: user } = api.user.profile.useQuery()
+
+  const logout = () => {
+    console.log("logout")
+    logoutAction().catch((err) => {
+      console.error("Failed to logout", err)
+    })
   }
-}
-const action = async (data: { code: string }) => {
-  "use server"
-  console.log("data", data)
-  return api.auth.loginVerify({
-    code: data.code,
-  })
-}
-export default async function Page() {
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Verify Code</CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <VerifyCodeForm action={action} />
-      </CardContent>
-    </Card>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <UserIcon />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p
+              className="text-sm leading-none"
+              dangerouslySetInnerHTML={{
+                __html: t("welcome", { name: user?.name }),
+              }}
+            ></p>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Link href="/users/settings">{t("common.settings")}</Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <form action={logout}>
+          <DropdownMenuItem>
+            <button>{t("auth.signout")}</button>
+          </DropdownMenuItem>
+        </form>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

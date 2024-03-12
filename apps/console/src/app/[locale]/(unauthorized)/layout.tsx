@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react"
 import { redirect } from "next/navigation"
 
 import { auth } from "@prismedis/auth"
-import { Logo as PrismedisLogo } from "@prismedis/ui/logo"
+import { Logo as PrismedisLogo } from "@prismedis/components/logo"
 
 import { APP_NAME } from "@/constants"
 

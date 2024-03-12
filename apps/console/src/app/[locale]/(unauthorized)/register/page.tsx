@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation"
 
 import type { LoginRegisterSchema } from "@prismedis/validators/login-register"
-import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { LoginRegisterForm } from "@prismedis/ui/forms/login"
+import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/components/card"
+import { LoginRegisterForm } from "@prismedis/components/forms/login"
 
 import { api } from "@/trpc/server"
 

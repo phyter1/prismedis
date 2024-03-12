@@ -3,8 +3,8 @@
 import type { RouterOutputs } from "@prismedis/api"
 import { use } from "react"
 import { useI18n } from "@prismedis/locales/client"
-import { cn } from "@prismedis/ui"
-import { Button } from "@prismedis/ui/button"
+import { cn } from "@prismedis/components"
+import { Button } from "@prismedis/components/button"
 import {
   Form,
   FormControl,
@@ -12,9 +12,9 @@ import {
   FormItem,
   FormMessage,
   useForm,
-} from "@prismedis/ui/form"
-import { Input } from "@prismedis/ui/input"
-import { toast } from "@prismedis/ui/toast"
+} from "@prismedis/components/form"
+import { Input } from "@prismedis/components/input"
+import { toast } from "@prismedis/components/toast"
 import { CreatePostSchema } from "@prismedis/validators"
 
 import { api } from "@/trpc/react"

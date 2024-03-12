@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Logo } from "@prismedis/ui/logo"
-import { ThemeToggle } from "@prismedis/ui/theme"
+import { Logo } from "@prismedis/components/logo"
+import { ThemeToggle } from "@prismedis/components/theme"
 
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { SignOut } from "./sign-out"

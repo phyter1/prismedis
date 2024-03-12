@@ -1,106 +1,55 @@
-"use client"
+import type { Metadata, Viewport } from "next"
 
-import type { RouterOutputs } from "@prismedis/api"
-import { use } from "react"
-import { userAgentFromString } from "next/server"
-import { Button } from "@prismedis/ui/button"
-import { Skeleton } from "@prismedis/ui/skeleton"
-import { toast } from "@prismedis/ui/toast"
-import { MonitorIcon, SmartphoneIcon, Trash2Icon } from "lucide-react"
+import { cn } from "@prismedis/components"
+import { TailwindIndicator } from "@prismedis/components/tailwind-indicator"
+import { ThemeProvider } from "@prismedis/components/theme"
+import { Toaster } from "@prismedis/components/toast"
+import { APP_DESCRIPTION, APP_TITLE } from "@prismedis/constants"
 
-import { api } from "@/trpc/react"
+import { TRPCReactProvider } from "@/trpc/react"
 
-export function SessionList(props: {
-  sessions: Promise<RouterOutputs["user"]["sessions"]>
-  sessionId: string
-}) {
-  // TODO: Make `useSuspenseQuery` work without having to pass a promise from RSC
-  const initialData = use(props.sessions)
-  const { data: sessions } = api.user.sessions.useQuery(undefined, {
-    initialData,
-  })
+import "@/app/globals.css"
 
-  return (
-    <>
-      {sessions.map((session) => {
-        return (
-          <SessionCard
-            key={session.id}
-            session={session}
-            sessionId={props.sessionId}
-          />
-        )
-      })}
-    </>
-  )
+export const metadata: Metadata = {
+  title: {
+    default: APP_TITLE,
+    template: `${APP_TITLE} | %s`,
+  },
+  description: APP_DESCRIPTION,
+  icons: [{ rel: "icon", url: "/icon.png" }],
 }
 
-export function SessionCard(props: {
-  session: RouterOutputs["user"]["sessions"][number]
-  sessionId: string
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+}
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
 }) {
-  const utils = api.useUtils()
-  const deleteSession = api.user.deleteSession.useMutation({
-    onSuccess: async () => {
-      await utils.user.invalidate()
-    },
-    onError: (err) => {
-      toast.error(
-        err?.data?.code === "UNAUTHORIZED"
-          ? "You must be logged in to manage your session"
-          : "Failed to delete selected session",
-      )
-    },
-  })
-
-  const ua = userAgentFromString(props.session.userAgent ?? "")
-  const isMobile = () =>
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      props.session.userAgent ?? "",
-    )
-
   return (
-    <div className=" flex w-full items-center space-x-4 rounded-md border p-4">
-      {isMobile() ? <SmartphoneIcon /> : <MonitorIcon />}
-      <div className="flex-1 space-y-1">
-        <p className="text-sm font-medium leading-none">
-          {ua.os.name} - {ua.browser.name}
-        </p>
-        <p className="text-sm text-muted-foreground">
-          {props.session.ipAddress === "::1"
-            ? "127.0.0.1 (localhost)"
-            : props.session.ipAddress}{" "}
-          {props.session.id === props.sessionId && " - Current session"}
-        </p>
-      </div>
-      {props.session.id !== props.sessionId && (
-        <Button
-          size="icon"
-          variant="destructive"
-          onClick={() => {
-            deleteSession.mutate({ sessionId: props.session.id })
-          }}
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans text-foreground antialiased",
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-          <Trash2Icon className="h-4 w-4" />
-        </Button>
-      )}
-    </div>
-  )
-}
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TailwindIndicator />
 
-export const SessionCardSkeleton = () => {
-  return (
-    <div className=" flex w-full items-center space-x-4 rounded-md border p-4">
-      <Skeleton className="h-8 w-8 rounded-full" />
-
-      <div className="flex-1 space-y-1">
-        <p className="text-sm font-medium leading-none">
-          <Skeleton className="h-4 w-[150px]" />
-        </p>
-        <p className="text-sm text-muted-foreground">
-          <Skeleton className="h-4 w-[250px]" />
-        </p>
-      </div>
-    </div>
+          <Toaster />
+        </ThemeProvider>
+      </body>
+    </html>
   )
 }

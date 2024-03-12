@@ -2,8 +2,9 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { cn } from "@prismedis/ui"
-import { buttonVariants } from "@prismedis/ui/button"
+
+import { cn } from "@prismedis/components"
+import { buttonVariants } from "@prismedis/components/button"
 
 interface SettingsSidebarProps extends React.HTMLAttributes<HTMLElement> {
   items: {

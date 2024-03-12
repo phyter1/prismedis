@@ -1,8 +1,9 @@
 "use client"
 
-import type { RouterOutputs } from "@prismedis/api"
 import { use } from "react"
-import { Button } from "@prismedis/ui/button"
+
+import type { RouterOutputs } from "@prismedis/api"
+import { Button } from "@prismedis/components/button"
 import {
   Form,
   FormControl,
@@ -11,10 +12,10 @@ import {
   FormLabel,
   FormMessage,
   useForm,
-} from "@prismedis/ui/form"
-import { Input } from "@prismedis/ui/input"
-import { Skeleton } from "@prismedis/ui/skeleton"
-import { toast } from "@prismedis/ui/toast"
+} from "@prismedis/components/form"
+import { Input } from "@prismedis/components/input"
+import { Skeleton } from "@prismedis/components/skeleton"
+import { toast } from "@prismedis/components/toast"
 import { UpdateProfileSchema } from "@prismedis/validators"
 
 import { api } from "@/trpc/react"

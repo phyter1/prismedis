@@ -1,46 +1,38 @@
-import type { Metadata } from "next"
-import { Separator } from "@prismedis/ui/separator"
+import Link from "next/link"
 
-import { SettingsSidebar } from "@/app/[locale]/(authorized)/users/settings/components/sidebar"
+import { Button } from "@prismedis/components/button"
 
-export const metadata: Metadata = {
-  title: "User settings",
-  description: "Advanced form example using react-hook-form and Zod.",
-}
+import "@prismedis/ui/card"
 
-const navItems = [
-  {
-    title: "Profile",
-    href: "/users/settings",
-  },
-  {
-    title: "Sessions",
-    href: "/users/settings/sessions",
-  },
-]
+import { Suspense } from "react"
 
-interface SettingsLayoutProps {
-  children: React.ReactNode
-}
+import { api } from "@/trpc/server"
 
-export default function SettingsLayout({ children }: SettingsLayoutProps) {
+export default async function Page() {
+  const templates = await api.internal_ui.emailTemplates()
   return (
-    <>
-      <div className="space-y-6 py-16">
-        <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-          <p className="text-muted-foreground">Manage your account settings</p>
+    <div>
+      Email Templates List
+      <Suspense fallback="Loading...">
+        <div className="grid gap-4">
+          {templates.map((t) => {
+            const name = `${t.path.split("src/email/templates")[1]}/${t.name.replace(".tsx", "")}`
+            const path = name.slice(1)
+            return (
+              <Button asChild key={path}>
+                <Link
+                  key={path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`templates/${path}`}
+                >
+                  {path}
+                </Link>
+              </Button>
+            )
+          })}
         </div>
-        <Separator className="my-6" />
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="lg:w-1/5">
-            <SettingsSidebar items={navItems} />
-          </aside>
-          <div className="flex-1">
-            <div className="mx-auto flex w-full lg:max-w-2xl">{children}</div>
-          </div>
-        </div>
-      </div>
-    </>
+      </Suspense>
+    </div>
   )
 }

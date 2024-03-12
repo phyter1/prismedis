@@ -1,6 +1,6 @@
 import { getI18n } from "@prismedis/locales/server"
-import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { VerifyCodeForm } from "@prismedis/ui/verify-code-form"
+import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/components/card"
+import { VerifyCodeForm } from "@prismedis/components/verify-code-form"
 
 import { api } from "@/trpc/server"
 

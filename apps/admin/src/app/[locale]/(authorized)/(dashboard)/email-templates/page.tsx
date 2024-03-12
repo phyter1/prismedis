@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { Button } from "@prismedis/ui/button"
+import { Button } from "@prismedis/components/button"
 
 import "@prismedis/ui/card"
 

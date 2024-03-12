@@ -1,10 +1,15 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
+import { Button } from "@prismedis/components/button"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@prismedis/components/card"
+import { LoginRegisterForm } from "@prismedis/components/forms/login"
 import { getI18n } from "@prismedis/locales/server"
-import { Button } from "@prismedis/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@prismedis/ui/card"
-import { LoginRegisterForm } from "@prismedis/ui/forms/login"
 
 import { api } from "@/trpc/server"
 
